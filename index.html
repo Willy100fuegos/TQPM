@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control de Reportes | Willy100fuegos</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        p.intro { font-size: 1.1em; color: #666; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { border: 1px solid #ddd; padding: 20px; border-radius: 8px; transition: transform 0.2s; background: #fff; }
+        .card:hover { transform: translateY(-5px); border-color: #3498db; }
+        .card h3 { margin-top: 0; color: #2980b9; }
+        .card p { font-size: 0.95em; line-height: 1.5; color: #555; }
+        .btn { display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn:hover { background-color: #2980b9; }
+        footer { margin-top: 40px; text-align: center; font-size: 0.85em; color: #888; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Portal de Reportes Ejecutivos</h1>
+    <p class="intro">Bienvenido al repositorio central de visualización de datos operativos. Seleccione un reporte para ver el análisis detallado.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>📊 Reporte Corporativo GPS</h3>
+            <p>Análisis detallado de telemetría y posicionamiento global de la flota vehicular correspondiente a <strong>Diciembre 2025</strong>. Incluye rutas y tiempos de actividad.</p>
+            <a href="Reporte-Corporativo-GPS-Diciembre.html" class="btn">Ver Reporte</a>
+        </div>
+
+        <div class="card">
+            <h3>🛡️ Reporte Global de Seguridad</h3>
+            <p>Resumen ejecutivo de incidencias, estados de alerta y métricas de seguridad operativa gestionadas por el centro de monitoreo a nivel global.</p>
+            <a href="Reporte-Global-de-Seguridad.html" class="btn">Ver Reporte</a>
+        </div>
+
+        <div class="card">
+            <h3>🏭 Operación TQPM - Diciembre</h3>
+            <p>Informe consolidado de actividades específicas para el proyecto <strong>Terminal Química Puerto México</strong>. Incluye el estatus de muelle y personal operativo.</p>
+            <a href="TQPM-diciembre.html" class="btn">Ver Reporte</a>
+        </div>
+
+        <div class="card">
+            <h3>📈 Dashboard Trimestral</h3>
+            <p>Panel interactivo con Indicadores Clave de Desempeño (KPIs) del último trimestre. Visualización de tendencias analíticas y eficiencia tecnológica.</p>
+            <a href="dashboard-trimestral.html" class="btn">Ver Dashboard</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 - Dirección de Tecnologías | Coatzacoalcos, Veracruz
+    </footer>
+</div>
+
+</body>
+</html>
