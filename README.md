@@ -1,33 +1,38 @@
-# 📊 TQPM - Centro de Reportes y Dashboards de Seguridad
+# TQPM Intelligence Portal 📊
 
-Este repositorio centraliza la visualización de datos estratégicos y operativos para el proyecto **Terminal Química Puerto México (TQPM)**. Como parte de la gestión tecnológica en seguridad privada, este espacio permite a los interesados acceder a reportes dinámicos y análisis de datos en tiempo real.
-
-## 1. 🚀 Visualización en Vivo
-Para una experiencia interactiva y ejecutiva, accede al portal desplegado a través de GitHub Pages:
-👉 **[Acceder al Portal de Reportes](https://willy100fuegos.github.io/TQPM/)**
+> **Repositorio Central de Reportes Ejecutivos y Business Intelligence.**
+> *Visualización de métricas operativas, telemetría GPS y seguridad patrimonial para la toma de decisiones estratégicas.*
 
 ---
 
-## 2. 📁 Contenido del Repositorio
-El repositorio incluye desarrollos en HTML diseñados para la supervisión operativa y ejecutiva:
-
-* **Reporte Corporativo GPS (Diciembre):** Análisis detallado de telemetría, rutas y cumplimiento de geocercas de la flota vehicular.
-* **Reporte Global de Seguridad:** Consolidado de incidencias, estados de fuerza y métricas de prevención de riesgos.
-* **Operación TQPM - Diciembre:** Seguimiento específico de las actividades de seguridad en el área de muelle y control de personal.
-* **Dashboard Trimestral:** Panel de indicadores clave (KPIs) para la evaluación del desempeño tecnológico y operativo.
-
-## 3. 🛠️ Tecnologías Aplicadas
-* **Frontend:** HTML5 y CSS3 para una visualización limpia y profesional.
-* **Hosting:** Despliegue automatizado mediante GitHub Pages.
-* **Gestión de Datos:** Estructuración de reportes para toma de decisiones directivas.
+## 🚀 Actualización (Enero 2026) - Módulo BI
+Se ha integrado el **Dashboard Anual de Servicios 2025**, marcando una evolución hacia reportes dinámicos. A diferencia de los reportes mensuales estáticos, este nuevo módulo consume datos estructurados desde `data.json`, permitiendo una visualización de tendencias anuales más fluida y escalable.
 
 ---
 
-## 4. 👨‍💻 Sobre el Desarrollador
+## 📂 Estructura del Ecosistema
+
+Este repositorio actúa como un **Hub de Información** para la gerencia operativa y clientes corporativos.
+
+| Archivo / Módulo | Tipo | Función Estratégica |
+| :--- | :---: | :--- |
+| **`index.html`** | **Portal** | **Landing Page Principal.** Menú de navegación centralizado que da acceso a todos los reportes históricos y activos. |
+| **`reporte_de_servicios_2025.html`** | **Dashboard** | **[NUEVO]** Tablero de control anual. Renderiza KPIs acumulados y gráficas de rendimiento del ejercicio 2025. |
+| **`data.json`** | **Backend** | **[NUEVO]** Base de datos ligera (JSON) que alimenta dinámicamente al reporte de servicios 2025. |
+| `Reporte-Corporativo-GPS...html` | Reporte | Análisis mensual de telemetría, rutas críticas y eficiencia de flota. |
+| `Reporte-Global-de-Seguridad.html` | Reporte | Resumen ejecutivo de incidencias, análisis de riesgos y estado de fuerza. |
+| `TQPM-diciembre.html` | Operativo | Bitácora específica de operación en Terminal Química Puerto México. |
+
+---
+
+## 🛠️ Stack Tecnológico
+
+Evolución hacia una arquitectura separada (Frontend/Data) para mejorar la mantenibilidad.
+
+* **Visualización:** HTML5 + CSS Grid (Diseño Ejecutivo Responsivo).
+* **Lógica de Negocio:** JavaScript (ES6+) para el procesamiento de métricas en el cliente.
+* **Datos:** JSON estático para desacoplar la información de la presentación visual.
+
+---
 **William Velázquez Valenzuela**
-* **Cargo:** Director de Tecnologías.
-* **Ubicación:** Coatzacoalcos, Veracruz, México.
-* **Especialidad:** Implementación estratégica de soluciones de seguridad, rastreo GPS, CCTV y automatización de procesos operativos.
-
----
-> *Este proyecto es parte de un portafolio profesional enfocado en la integración de tecnología avanzada en el sector de seguridad privada.*
+*Director de Tecnologías | Pixmedia Agency*
