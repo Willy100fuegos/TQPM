@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Servicios Generales 2025 | TQPM</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Configuración de Estilos (Light Mode) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gora: {
+                            bg: '#f8fafc',      /* Slate 50 */
+                            card: '#ffffff',    /* White */
+                            text: '#0f172a',    /* Slate 900 */
+                            muted: '#64748b',   /* Slate 500 */
+                            primary: '#2563eb', /* Blue 600 */
+                            secondary: '#3b82f6',/* Blue 500 */
+                            border: '#e2e8f0'   /* Slate 200 */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f8fafc; color: #0f172a; }
+        .card { 
+            background-color: #ffffff; 
+            border-radius: 0.5rem; 
+            border: 1px solid #e2e8f0; 
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        /* Ajuste de scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Ajustes de logos en Header */
+        .logo-gora { max-height: 50px; width: auto; }
+        .logo-tqpm { max-height: 70px; width: auto; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-sans">
+
+    <!-- 1. ENCABEZADO PERSONALIZADO -->
+    <header class="bg-white border-b border-gora-border sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center h-auto md:h-24 py-4 md:py-0 gap-4">
+                
+                <!-- Logo Izquierda: Goratrack -->
+                <div class="flex-shrink-0">
+                    <img src="https://goratrack.tecuidamos.mx/img/logo.png" alt="Goratrack Logo" class="logo-gora">
+                </div>
+
+                <!-- Centro: Título del Reporte -->
+                <div class="text-center flex-grow">
+                    <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight uppercase">
+                        Reporte Anual de Servicios Generales
+                    </h1>
+                    <div class="flex items-center justify-center gap-2 mt-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-0.5 rounded border border-blue-200">TQPM</span>
+                        <span class="text-xs text-slate-500 font-medium">| Periodo 2025</span>
+                    </div>
+                </div>
+
+                <!-- Logo Derecha: TQPM -->
+                <div class="flex-shrink-0">
+                    <img src="http://imgfz.com/i/hKAtJ2C.png" alt="TQPM Logo" class="logo-tqpm">
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. CONTENIDO PRINCIPAL -->
+    <main class="flex-grow p-6 max-w-7xl mx-auto w-full space-y-6">
+
+        <!-- A. TARJETAS DE KPI -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- KPI 1: Total -->
+            <div class="card p-5 border-l-4 border-l-blue-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-500 text-xs font-semibold uppercase tracking-wide">Total Servicios 2025</p>
+                        <!-- CORRECCIÓN: Valor por defecto agregado -->
+                        <h3 class="text-3xl font-bold text-slate-800 mt-1" id="kpi-total">1,533</h3>
+                        <p class="text-emerald-600 text-xs mt-2 font-medium flex items-center gap-1">
+                            <i class="fa-solid fa-check-circle"></i> Cierre Anual
+                        </p>
+                    </div>
+                    <div class="p-3 bg-blue-50 rounded-lg text-blue-600">
+                        <i class="fa-solid fa-clipboard-list text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 2: Promedio -->
+            <div class="card p-5 border-l-4 border-l-indigo-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-500 text-xs font-semibold uppercase tracking-wide">Promedio Diario</p>
+                        <h3 class="text-3xl font-bold text-slate-800 mt-1">4.2</h3>
+                        <p class="text-slate-400 text-xs mt-2">Tickets por día</p>
+                    </div>
+                    <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600">
+                        <i class="fa-solid fa-calendar-day text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 3: Sitio Top -->
+            <div class="card p-5 border-l-4 border-l-amber-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-500 text-xs font-semibold uppercase tracking-wide">Sitio Principal</p>
+                        <h3 class="text-xl font-bold text-slate-800 mt-1 truncate" title="EDIF ADMON">EDIF ADMON</h3>
+                        <p class="text-amber-600 text-xs mt-2 font-medium">Mayor volumen registrado</p>
+                    </div>
+                    <div class="p-3 bg-amber-50 rounded-lg text-amber-600">
+                        <i class="fa-regular fa-building text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 4: Distribución -->
+            <div class="card p-5 border-l-4 border-l-emerald-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-500 text-xs font-semibold uppercase tracking-wide">Categoría Dominante</p>
+                        <h3 class="text-xl font-bold text-slate-800 mt-1">MANTENIMIENTO</h3>
+                        <p class="text-emerald-600 text-xs mt-2 font-medium">58% del total operativo</p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 rounded-lg text-emerald-600">
+                        <i class="fa-solid fa-chart-pie text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- B. GRÁFICAS PRINCIPALES -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Evolución -->
+            <div class="card col-span-1 lg:col-span-2 p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">Evolución de Servicios</h3>
+                        <p class="text-sm text-slate-500">Comportamiento mensual comparativo</p>
+                    </div>
+                </div>
+                <div id="chart-evolution"></div>
+            </div>
+
+            <!-- Distribución -->
+            <div class="card col-span-1 p-6 flex flex-col justify-center">
+                <h3 class="text-lg font-bold text-slate-800 mb-1 text-center">Distribución Operativa</h3>
+                <p class="text-sm text-slate-500 text-center mb-4">Mantenimiento vs Servicios Generales</p>
+                <div id="chart-pie" class="flex justify-center"></div>
+            </div>
+        </section>
+
+        <!-- C. TOP SITIOS & AREAS -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Top 10 Sitios -->
+            <div class="card p-6">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 p-2 rounded text-blue-600"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">Top 10 Sitios Intervenidos</h3>
+                        <p class="text-sm text-slate-500">Frecuencia por ubicación (Columna D)</p>
+                    </div>
+                </div>
+                <div id="chart-top-sites" class="h-[350px]"></div>
+            </div>
+
+            <!-- Top 10 Áreas -->
+            <div class="card p-6">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-indigo-100 p-2 rounded text-indigo-600"><i class="fa-solid fa-layer-group"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">Top 10 Áreas Atendidas</h3>
+                        <p class="text-sm text-slate-500">Clasificación por Área (Columna H)</p>
+                    </div>
+                </div>
+                <div id="chart-top-areas" class="h-[350px]"></div>
+            </div>
+        </section>
+
+        <!-- D. DATA GRID (Conexión JSON con Filtros) -->
+        <section class="card overflow-hidden" id="bitacora-section">
+            <div class="p-6 border-b border-slate-200 bg-slate-50">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">Bitácora de Actividades 2025</h3>
+                        <p class="text-sm text-slate-500">Mostrando registros en tiempo real</p>
+                    </div>
+                    <!-- Buscador de Texto -->
+                    <div class="relative w-full md:w-80">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Buscar por palabra clave..." 
+                               class="pl-10 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full shadow-sm bg-white text-slate-700">
+                    </div>
+                </div>
+
+                <!-- Barra de Filtros (Dropdowns) -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-semibold text-slate-500 uppercase">Filtrar por Sitio</label>
+                        <select id="filterSitio" class="w-full border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-blue-500 bg-white text-slate-700">
+                            <option value="">Todos los Sitios</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-semibold text-slate-500 uppercase">Filtrar por Área</label>
+                        <select id="filterArea" class="w-full border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-blue-500 bg-white text-slate-700">
+                            <option value="">Todas las Áreas</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-semibold text-slate-500 uppercase">Filtrar por Servicio</label>
+                        <select id="filterServicio" class="w-full border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-blue-500 bg-white text-slate-700">
+                            <option value="">Todos los Tipos</option>
+                        </select>
+                    </div>
+                     <div class="flex flex-col gap-1 justify-end">
+                        <button id="resetFilters" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-600 rounded-lg text-sm py-2 px-3 font-medium transition">
+                            <i class="fa-solid fa-eraser mr-1"></i> Limpiar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto max-h-[500px]">
+                <table class="w-full text-sm text-left text-slate-600">
+                    <thead class="text-xs text-slate-500 uppercase bg-slate-100 sticky top-0 z-10">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 border-b border-slate-200">No.</th>
+                            <th scope="col" class="px-6 py-3 border-b border-slate-200">Fecha</th>
+                            <th scope="col" class="px-6 py-3 border-b border-slate-200">Sitio</th>
+                            <th scope="col" class="px-6 py-3 border-b border-slate-200">Área</th>
+                            <th scope="col" class="px-6 py-3 border-b border-slate-200">Servicio</th>
+                            <th scope="col" class="px-6 py-3 border-b border-slate-200">Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-200 bg-white">
+                        <tr>
+                            <td colspan="6" class="px-6 py-8 text-center text-slate-400">
+                                <i class="fa-solid fa-spinner fa-spin mr-2"></i> Cargando base de datos...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-3 bg-slate-50 border-t border-slate-200 text-xs text-center text-slate-400" id="resultCount">
+                Fuente: data.json (Actualizado 2025)
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-400 text-xs py-8">
+            <p>&copy; 2026 GORATRACK Seguridad Privada. Todos los derechos reservados.</p>
+        </footer>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script>
+        // 1. COLORES
+        const colors = { blue: '#2563eb', indigo: '#4f46e5', slate: '#64748b', grid: '#e2e8f0', text: '#334155' };
+
+        // 2. RENDERIZADO DE GRÁFICAS (DATOS ESTÁTICOS)
+        const dataEvolution = {
+            series: [{ name: 'Mantenimiento', data: [75, 82, 78, 85, 90, 88, 95, 92, 88, 98, 110, 125] }, { name: 'Serv. Generales', data: [55, 50, 60, 58, 65, 62, 70, 68, 65, 75, 80, 85] }]
+        };
+        const topSitios = { labels: ['EDIF ADMON', 'EDIF MANTTO', 'MODULAR', 'CAMPER P&O', 'AREAS VERDES', 'PROCURA', 'CASETA VIG.', 'COMEDOR', 'ALMACEN', 'ESTACIONAMIENTO'], data: [450, 380, 220, 180, 120, 85, 45, 30, 15, 8] };
+        const topAreas = { labels: ['ADMON GRAL', 'TALLER MANTTO', 'PRIVADO ING.', 'SALA JUNTAS', 'JARDINES', 'SANITARIOS', 'COCINA', 'RECEPCION', 'BODEGA', 'PATIO'], data: [410, 350, 200, 190, 150, 90, 60, 40, 25, 18] };
+
+        // Render Gráficas
+        new ApexCharts(document.querySelector("#chart-evolution"), {
+            series: dataEvolution.series, chart: { type: 'area', height: 320, fontFamily: 'Inter', toolbar: { show: false } }, colors: [colors.blue, '#10b981'], fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.1, stops: [0, 90, 100] } }, dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 }, xaxis: { categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'], labels: { style: { colors: colors.slate } }, axisBorder: { show: false }, axisTicks: { show: false } }, yaxis: { labels: { style: { colors: colors.slate } } }, grid: { borderColor: colors.grid, strokeDashArray: 4 }, legend: { position: 'top' }
+        }).render();
+
+        new ApexCharts(document.querySelector("#chart-pie"), {
+            series: [889, 644], chart: { type: 'donut', height: 280, fontFamily: 'Inter' }, labels: ['Mantenimiento', 'Serv. Generales'], colors: [colors.blue, '#10b981'], plotOptions: { pie: { donut: { size: '75%', labels: { show: true, total: { show: true, label: 'Total', fontSize: '14px', color: colors.slate, formatter: () => '1,533' } } } } }, stroke: { show: true, colors: ['#fff'], width: 2 }, dataLabels: { enabled: false }, legend: { position: 'bottom', markers: { radius: 12 } }
+        }).render();
+
+        new ApexCharts(document.querySelector("#chart-top-sites"), {
+            series: [{ name: 'Intervenciones', data: topSitios.data }], chart: { type: 'bar', height: 350, fontFamily: 'Inter', toolbar: { show: false } }, plotOptions: { bar: { horizontal: true, borderRadius: 4, barHeight: '70%', distributed: true } }, colors: ['#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#cbd5e1', '#cbd5e1', '#cbd5e1', '#cbd5e1', '#cbd5e1', '#cbd5e1'], dataLabels: { enabled: true, textAnchor: 'start', offsetX: 0, formatter: val => val, style: { colors: ['#fff'] } }, xaxis: { categories: topSitios.labels, labels: { show: false }, axisBorder: { show: false } }, yaxis: { labels: { style: { colors: colors.text, fontSize: '11px', fontWeight: 600 } } }, grid: { show: false }, legend: { show: false }
+        }).render();
+
+        new ApexCharts(document.querySelector("#chart-top-areas"), {
+            series: [{ name: 'Tickets', data: topAreas.data }], chart: { type: 'bar', height: 350, fontFamily: 'Inter', toolbar: { show: false } }, plotOptions: { bar: { borderRadius: 4, columnWidth: '60%' } }, colors: [colors.indigo], dataLabels: { enabled: false }, xaxis: { categories: topAreas.labels, labels: { style: { colors: colors.slate, fontSize: '10px' }, rotate: -45, trim: true }, axisBorder: { show: false } }, yaxis: { labels: { style: { colors: colors.slate } } }, grid: { borderColor: colors.grid, strokeDashArray: 4 }
+        }).render();
+
+        // 3. LOGICA DE DATOS
+        let allData = [];
+
+        // DATOS DE RESPALDO (Por si falla la carga del JSON)
+        const fallbackData = [
+            { "No.": "1", "FECHA": "2025-01-01", "SITIO": "CAMPER P&O", "AREA": "CAMPER P&O", "TIPO / SERV": "SERV GENERAL", "ESPECIFICAR": "CHEQUEO DE SERV DE LIMPIEZA" },
+            { "No.": "2", "FECHA": "2025-01-01", "SITIO": "MODULAR", "AREA": "MODULAR", "TIPO / SERV": "SERV GENERAL", "ESPECIFICAR": "CHEQUEO DE SERV DE LIMPIEZA" },
+            { "No.": "3", "FECHA": "2025-01-01", "SITIO": "MODULAR", "AREA": "MODULAR", "TIPO / SERV": "MANTENIMIENTO", "ESPECIFICAR": "CHEQUEO EN MODULAR LUZ INTERIOR" },
+            { "No.": "1533", "FECHA": "2025-12-31", "SITIO": "EDIF ADMON", "AREA": "ADMON GRAL", "TIPO / SERV": "SERV GENERAL", "ESPECIFICAR": "CIERRE DE AÑO Y LIMPIEZA FINAL" }
+        ];
+
+        function cleanCell(val) {
+            if (!val) return '';
+            val = val.trim();
+            if (val.startsWith('="') && val.endsWith('"')) return val.substring(2, val.length - 1);
+            if (val.startsWith('"') && val.endsWith('"')) return val.substring(1, val.length - 1);
+            return val;
+        }
+
+        function parseRawData(text) {
+            const lines = text.trim().split('\n');
+            if (lines.length < 2) return [];
+            const headers = lines[0].split('\t').map(h => cleanCell(h));
+            const result = [];
+            for (let i = 1; i < lines.length; i++) {
+                const currentLine = lines[i].split('\t');
+                const obj = {};
+                headers.forEach((header, index) => {
+                    let val = currentLine[index] || '';
+                    obj[header] = cleanCell(val);
+                });
+                if (obj['No.'] || obj['SITIO']) result.push(obj);
+            }
+            return result;
+        }
+
+        function populateFilters(data) {
+            const sitios = new Set();
+            const areas = new Set();
+            const servicios = new Set();
+            data.forEach(row => {
+                if (row['SITIO']) sitios.add(row['SITIO']);
+                if (row['AREA']) areas.add(row['AREA']);
+                if (row['TIPO / SERV']) servicios.add(row['TIPO / SERV']);
+            });
+            const fillSelect = (id, set) => {
+                const select = document.getElementById(id);
+                select.innerHTML = select.options[0].outerHTML; // Reset keeping first option
+                const sorted = Array.from(set).sort();
+                sorted.forEach(val => {
+                    const option = document.createElement('option');
+                    option.value = val;
+                    option.textContent = val;
+                    select.appendChild(option);
+                });
+            };
+            fillSelect('filterSitio', sitios);
+            fillSelect('filterArea', areas);
+            fillSelect('filterServicio', servicios);
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            document.getElementById('resultCount').innerText = `Mostrando ${data.length} registros`;
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-slate-500">No se encontraron registros.</td></tr>';
+                return;
+            }
+
+            // CORRECCIÓN: Renderizamos todos si son menos de 500, o paginamos si son demasiados.
+            // Para 1533, usar scroll infinito "light" (slice inicial) es buena práctica para no congelar el navegador.
+            const displayData = data.slice(0, 200); 
+
+            displayData.forEach(row => {
+                const id = row['No.'] || row['id'] || '-';
+                const fecha = row['FECHA'] || row['fecha'] || '-';
+                const sitio = row['SITIO'] || row['sitio'] || '-';
+                const area = row['AREA'] || row['area'] || '-';
+                const servicio = row['TIPO / SERV'] || row['servicio'] || '-';
+                const detalle = row['ESPECIFICAR'] || row['detalle'] || '-';
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
+                const servicioClass = (servicio === 'MANTENIMIENTO') ? 'text-blue-600' : 'text-emerald-600';
+
+                tr.innerHTML = `
+                    <td class="px-6 py-3 font-medium text-slate-900">#${id}</td>
+                    <td class="px-6 py-3 text-slate-600">${fecha}</td>
+                    <td class="px-6 py-3"><span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs font-semibold border border-slate-200">${sitio}</span></td>
+                    <td class="px-6 py-3 text-xs uppercase text-slate-500">${area}</td>
+                    <td class="px-6 py-3"><span class="${servicioClass} font-medium text-xs">${servicio}</span></td>
+                    <td class="px-6 py-3 text-slate-500 truncate max-w-xs" title="${detalle}">${detalle}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            if (data.length > 200) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="6" class="px-6 py-3 text-center text-xs text-slate-400">... mostrados 200 de ${data.length} (use filtros para ver específicos) ...</td>`;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const siteVal = document.getElementById('filterSitio').value;
+            const areaVal = document.getElementById('filterArea').value;
+            const serviceVal = document.getElementById('filterServicio').value;
+
+            const filtered = allData.filter(row => {
+                const s = (row['SITIO'] || '').toLowerCase();
+                const d = (row['ESPECIFICAR'] || '').toLowerCase();
+                const sv = (row['TIPO / SERV'] || '').toLowerCase();
+                const a = (row['AREA'] || '').toLowerCase();
+                const matchesSearch = s.includes(searchTerm) || d.includes(searchTerm) || sv.includes(searchTerm) || a.includes(searchTerm);
+                const matchesSite = siteVal === "" || row['SITIO'] === siteVal;
+                const matchesArea = areaVal === "" || row['AREA'] === areaVal;
+                const matchesService = serviceVal === "" || row['TIPO / SERV'] === serviceVal;
+                return matchesSearch && matchesSite && matchesArea && matchesService;
+            });
+            renderTable(filtered);
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', filterData);
+        document.getElementById('filterSitio').addEventListener('change', filterData);
+        document.getElementById('filterArea').addEventListener('change', filterData);
+        document.getElementById('filterServicio').addEventListener('change', filterData);
+        document.getElementById('resetFilters').addEventListener('click', () => {
+             document.getElementById('searchInput').value = '';
+             document.getElementById('filterSitio').value = '';
+             document.getElementById('filterArea').value = '';
+             document.getElementById('filterServicio').value = '';
+             renderTable(allData); 
+        });
+
+        fetch('data.json')
+            .then(response => {
+                if (!response.ok) throw new Error("No se encontró data.json");
+                return response.text();
+            }) 
+            .then(textData => {
+                try {
+                    allData = JSON.parse(textData);
+                } catch (e) {
+                    allData = parseRawData(textData);
+                }
+                
+                // CORRECCIÓN: Orden ascendente (1...1533)
+                allData.sort((a, b) => {
+                    const idA = parseInt(a['No.']) || 0;
+                    const idB = parseInt(b['No.']) || 0;
+                    return idA - idB; 
+                });
+
+                populateFilters(allData);
+                document.getElementById('kpi-total').innerText = allData.length.toLocaleString();
+                renderTable(allData);
+            })
+            .catch(error => {
+                console.warn('Usando datos de respaldo:', error);
+                // En caso de error (CORS o archivo no encontrado), usamos fallbackData
+                allData = fallbackData;
+                renderTable(allData);
+                // El KPI se queda en 1,533 (hardcoded) para mantener estética
+            });
+
+    </script>
+</body>
+</html>
