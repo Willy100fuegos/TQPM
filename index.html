@@ -5,56 +5,188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Control de Reportes | Willy100fuegos</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        p.intro { font-size: 1.1em; color: #666; margin-bottom: 30px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card { border: 1px solid #ddd; padding: 20px; border-radius: 8px; transition: transform 0.2s; background: #fff; }
-        .card:hover { transform: translateY(-5px); border-color: #3498db; }
-        .card h3 { margin-top: 0; color: #2980b9; }
-        .card p { font-size: 0.95em; line-height: 1.5; color: #555; }
-        .btn { display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-        .btn:hover { background-color: #2980b9; }
-        footer { margin-top: 40px; text-align: center; font-size: 0.85em; color: #888; }
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #1e293b;
+            --accent-color: #3b82f6;
+            --text-color: #e2e8f0;
+            --card-bg: #1e293b;
+            --hover-bg: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: rgba(59, 130, 246, 0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin: 0 0 15px 0;
+            color: #ffffff;
+        }
+
+        .card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #2563eb;
+        }
+        
+        /* Etiqueta de Nuevo */
+        .new-tag {
+            background-color: #10b981;
+            color: #064e3b;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 99px;
+            vertical-align: middle;
+            margin-left: 10px;
+            text-transform: uppercase;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            color: #64748b;
+            font-size: 0.9rem;
+            border-top: 1px solid #334155;
+            padding-top: 30px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Portal de Reportes Ejecutivos</h1>
-    <p class="intro">Bienvenido al repositorio central de visualización de datos operativos. Seleccione un reporte para ver el análisis detallado.</p>
+    <div class="container">
+        <header>
+            <h1>Portal de Reportes Ejecutivos</h1>
+            <p class="subtitle">Bienvenido al repositorio central de visualización de datos operativos. Seleccione un reporte para ver el análisis detallado.</p>
+        </header>
 
-    <div class="grid">
-        <div class="card">
-            <h3>📊 Reporte Corporativo GPS</h3>
-            <p>Análisis detallado de telemetría y posicionamiento global de la flota vehicular correspondiente a <strong>Diciembre 2025</strong>. Incluye rutas y tiempos de actividad.</p>
-            <a href="Reporte-Corporativo-GPS-Diciembre.html" class="btn">Ver Reporte</a>
+        <div class="grid">
+            
+            <div class="card" style="border-color: #10b981;">
+                <div class="card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">📊</div>
+                <h3>Servicios 2025 <span class="new-tag">Nuevo</span></h3>
+                <p>Dashboard integral de análisis de servicios anuales. Visualización estratégica de KPIs, tendencias operativas y desglose de datos acumulados para el ejercicio 2025.</p>
+                <a href="reporte_de_servicios_2025.html" class="btn" style="background-color: #10b981;">Ver Dashboard Anual</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🗺️</div>
+                <h3>Reporte Corporativo GPS</h3>
+                <p>Análisis detallado de telemetría y posicionamiento global de la flota vehicular correspondiente a <strong>Diciembre 2025</strong>. Incluye rutas y tiempos de actividad.</p>
+                <a href="Reporte-Corporativo-GPS-Diciembre.html" class="btn">Ver Reporte</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🛡️</div>
+                <h3>Reporte Global de Seguridad</h3>
+                <p>Resumen ejecutivo de incidencias, estados de alerta y métricas de seguridad operativa gestionadas por el centro de monitoreo a nivel global.</p>
+                <a href="Reporte-Global-de-Seguridad.html" class="btn">Ver Reporte</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🏭</div>
+                <h3>Operación TQPM - Diciembre</h3>
+                <p>Informe consolidado de actividades específicas para el proyecto <strong>Terminal Química Puerto México</strong>. Incluye el estatus de muelle y personal operativo.</p>
+                <a href="TQPM-diciembre.html" class="btn">Ver Reporte</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📈</div>
+                <h3>Dashboard Trimestral</h3>
+                <p>Panel interactivo con Indicadores Clave de Desempeño (KPIs) del último trimestre. Visualización de tendencias analíticas y eficiencia tecnológica.</p>
+                <a href="dashboard-trimestral.html" class="btn">Ver Dashboard</a>
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>🛡️ Reporte Global de Seguridad</h3>
-            <p>Resumen ejecutivo de incidencias, estados de alerta y métricas de seguridad operativa gestionadas por el centro de monitoreo a nivel global.</p>
-            <a href="Reporte-Global-de-Seguridad.html" class="btn">Ver Reporte</a>
-        </div>
-
-        <div class="card">
-            <h3>🏭 Operación TQPM - Diciembre</h3>
-            <p>Informe consolidado de actividades específicas para el proyecto <strong>Terminal Química Puerto México</strong>. Incluye el estatus de muelle y personal operativo.</p>
-            <a href="TQPM-diciembre.html" class="btn">Ver Reporte</a>
-        </div>
-
-        <div class="card">
-            <h3>📈 Dashboard Trimestral</h3>
-            <p>Panel interactivo con Indicadores Clave de Desempeño (KPIs) del último trimestre. Visualización de tendencias analíticas y eficiencia tecnológica.</p>
-            <a href="dashboard-trimestral.html" class="btn">Ver Dashboard</a>
-        </div>
+        <footer>
+            <p>&copy; 2026 - Dirección de Tecnologías | Coatzacoalcos, Veracruz</p>
+        </footer>
     </div>
-
-    <footer>
-        &copy; 2026 - Dirección de Tecnologías | Coatzacoalcos, Veracruz
-    </footer>
-</div>
 
 </body>
 </html>
