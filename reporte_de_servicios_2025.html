@@ -103,7 +103,6 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-slate-500 text-xs font-semibold uppercase tracking-wide">Total Servicios 2025</p>
-                        <!-- CORRECCIÓN: Valor por defecto agregado -->
                         <h3 class="text-3xl font-bold text-slate-800 mt-1" id="kpi-total">1,533</h3>
                         <p class="text-emerald-600 text-xs mt-2 font-medium flex items-center gap-1">
                             <i class="fa-solid fa-check-circle"></i> Cierre Anual
@@ -206,13 +205,13 @@
             </div>
         </section>
 
-        <!-- D. DATA GRID (Conexión JSON con Filtros) -->
+        <!-- D. DATA GRID (CONEXIÓN CSV DIRECTA) -->
         <section class="card overflow-hidden" id="bitacora-section">
             <div class="p-6 border-b border-slate-200 bg-slate-50">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
                     <div>
                         <h3 class="text-lg font-bold text-slate-800">Bitácora de Actividades 2025</h3>
-                        <p class="text-sm text-slate-500">Mostrando registros en tiempo real</p>
+                        <p class="text-sm text-slate-500">Conexión directa: servicios_generales_2025_tqpm.csv</p>
                     </div>
                     <!-- Buscador de Texto -->
                     <div class="relative w-full md:w-80">
@@ -267,14 +266,14 @@
                     <tbody id="tableBody" class="divide-y divide-slate-200 bg-white">
                         <tr>
                             <td colspan="6" class="px-6 py-8 text-center text-slate-400">
-                                <i class="fa-solid fa-spinner fa-spin mr-2"></i> Cargando base de datos...
+                                <i class="fa-solid fa-spinner fa-spin mr-2"></i> Cargando base de datos CSV...
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="p-3 bg-slate-50 border-t border-slate-200 text-xs text-center text-slate-400" id="resultCount">
-                Fuente: data.json (Actualizado 2025)
+                Fuente: servicios_generales_2025_tqpm.csv
             </div>
         </section>
 
@@ -289,7 +288,7 @@
         // 1. COLORES
         const colors = { blue: '#2563eb', indigo: '#4f46e5', slate: '#64748b', grid: '#e2e8f0', text: '#334155' };
 
-        // 2. RENDERIZADO DE GRÁFICAS (DATOS ESTÁTICOS)
+        // 2. RENDERIZADO DE GRÁFICAS (DATOS ESTÁTICOS - BLINDADOS)
         const dataEvolution = {
             series: [{ name: 'Mantenimiento', data: [75, 82, 78, 85, 90, 88, 95, 92, 88, 98, 110, 125] }, { name: 'Serv. Generales', data: [55, 50, 60, 58, 65, 62, 70, 68, 65, 75, 80, 85] }]
         };
@@ -313,38 +312,79 @@
             series: [{ name: 'Tickets', data: topAreas.data }], chart: { type: 'bar', height: 350, fontFamily: 'Inter', toolbar: { show: false } }, plotOptions: { bar: { borderRadius: 4, columnWidth: '60%' } }, colors: [colors.indigo], dataLabels: { enabled: false }, xaxis: { categories: topAreas.labels, labels: { style: { colors: colors.slate, fontSize: '10px' }, rotate: -45, trim: true }, axisBorder: { show: false } }, yaxis: { labels: { style: { colors: colors.slate } } }, grid: { borderColor: colors.grid, strokeDashArray: 4 }
         }).render();
 
-        // 3. LOGICA DE DATOS
+        // 3. LOGICA DE DATOS DINÁMICA - CSV READER
         let allData = [];
 
-        // DATOS DE RESPALDO (Por si falla la carga del JSON)
+        // Datos de respaldo mínimos (solo por si el servidor bloquea la carga)
         const fallbackData = [
-            { "No.": "1", "FECHA": "2025-01-01", "SITIO": "CAMPER P&O", "AREA": "CAMPER P&O", "TIPO / SERV": "SERV GENERAL", "ESPECIFICAR": "CHEQUEO DE SERV DE LIMPIEZA" },
-            { "No.": "2", "FECHA": "2025-01-01", "SITIO": "MODULAR", "AREA": "MODULAR", "TIPO / SERV": "SERV GENERAL", "ESPECIFICAR": "CHEQUEO DE SERV DE LIMPIEZA" },
-            { "No.": "3", "FECHA": "2025-01-01", "SITIO": "MODULAR", "AREA": "MODULAR", "TIPO / SERV": "MANTENIMIENTO", "ESPECIFICAR": "CHEQUEO EN MODULAR LUZ INTERIOR" },
-            { "No.": "1533", "FECHA": "2025-12-31", "SITIO": "EDIF ADMON", "AREA": "ADMON GRAL", "TIPO / SERV": "SERV GENERAL", "ESPECIFICAR": "CIERRE DE AÑO Y LIMPIEZA FINAL" }
+            { "No.": "1", "FECHA": "01/01/2025", "SITIO": "CAMPER P&O", "AREA": "CAMPER P&O", "TIPO / SERV": "SERV GENERAL", "ESPECIFICAR": "EJEMPLO: CARGA DE DATOS FALLIDA" }
         ];
 
-        function cleanCell(val) {
-            if (!val) return '';
-            val = val.trim();
-            if (val.startsWith('="') && val.endsWith('"')) return val.substring(2, val.length - 1);
-            if (val.startsWith('"') && val.endsWith('"')) return val.substring(1, val.length - 1);
-            return val;
-        }
+        // --- FUNCIÓN PARSER CSV ROBUSTA ---
+        // Maneja comas dentro de comillas (ej: "Muebles, Sillas y Mesas")
+        function parseCSV(text) {
+            const rows = [];
+            let currentRow = [];
+            let currentCell = '';
+            let inQuotes = false;
+            
+            // Normalizar saltos de línea
+            text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-        function parseRawData(text) {
-            const lines = text.trim().split('\n');
-            if (lines.length < 2) return [];
-            const headers = lines[0].split('\t').map(h => cleanCell(h));
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const nextChar = text[i + 1];
+
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        // Doble comilla dentro de comillas es una comilla literal
+                        currentCell += '"';
+                        i++; // Saltar la siguiente comilla
+                    } else {
+                        // Invertir estado de comillas
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    // Fin de celda
+                    currentRow.push(currentCell.trim());
+                    currentCell = '';
+                } else if (char === '\n' && !inQuotes) {
+                    // Fin de fila
+                    currentRow.push(currentCell.trim());
+                    if (currentRow.length > 0) rows.push(currentRow);
+                    currentRow = [];
+                    currentCell = '';
+                } else {
+                    currentCell += char;
+                }
+            }
+            // Agregar última fila si existe
+            if (currentCell || currentRow.length > 0) {
+                currentRow.push(currentCell.trim());
+                rows.push(currentRow);
+            }
+
+            // Convertir Array de Arrays a Array de Objetos
+            if (rows.length < 2) return [];
+            
+            const headers = rows[0].map(h => h.trim()); // Primera fila son headers
             const result = [];
-            for (let i = 1; i < lines.length; i++) {
-                const currentLine = lines[i].split('\t');
+
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                // Saltar filas vacías
+                if (row.length <= 1 && !row[0]) continue;
+                
                 const obj = {};
                 headers.forEach((header, index) => {
-                    let val = currentLine[index] || '';
-                    obj[header] = cleanCell(val);
+                    // Asignar valor o vacío si no existe
+                    obj[header] = row[index] || '';
                 });
-                if (obj['No.'] || obj['SITIO']) result.push(obj);
+                
+                // Filtro básico de validez
+                if (obj['No.'] || obj['SITIO']) {
+                    result.push(obj);
+                }
             }
             return result;
         }
@@ -360,7 +400,7 @@
             });
             const fillSelect = (id, set) => {
                 const select = document.getElementById(id);
-                select.innerHTML = select.options[0].outerHTML; // Reset keeping first option
+                select.innerHTML = select.options[0].outerHTML; 
                 const sorted = Array.from(set).sort();
                 sorted.forEach(val => {
                     const option = document.createElement('option');
@@ -377,26 +417,28 @@
         function renderTable(data) {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
-            document.getElementById('resultCount').innerText = `Mostrando ${data.length} registros`;
+            document.getElementById('resultCount').innerText = `Mostrando ${data.length} registros (Fuente: CSV)`;
 
             if (data.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-slate-500">No se encontraron registros.</td></tr>';
                 return;
             }
 
-            // CORRECCIÓN: Renderizamos todos si son menos de 500, o paginamos si son demasiados.
-            // Para 1533, usar scroll infinito "light" (slice inicial) es buena práctica para no congelar el navegador.
+            // Paginación "light" para rendimiento (primeros 200)
             const displayData = data.slice(0, 200); 
 
             displayData.forEach(row => {
-                const id = row['No.'] || row['id'] || '-';
-                const fecha = row['FECHA'] || row['fecha'] || '-';
-                const sitio = row['SITIO'] || row['sitio'] || '-';
-                const area = row['AREA'] || row['area'] || '-';
-                const servicio = row['TIPO / SERV'] || row['servicio'] || '-';
-                const detalle = row['ESPECIFICAR'] || row['detalle'] || '-';
+                // Mapeo seguro con los headers exactos de tu CSV
+                const id = row['No.'] || '-';
+                const fecha = row['FECHA'] || '-';
+                const sitio = row['SITIO'] || '-';
+                const area = row['AREA'] || '-';
+                const servicio = row['TIPO / SERV'] || '-';
+                const detalle = row['ESPECIFICAR'] || '-';
+                
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
+                
                 const servicioClass = (servicio === 'MANTENIMIENTO') ? 'text-blue-600' : 'text-emerald-600';
 
                 tr.innerHTML = `
@@ -428,15 +470,18 @@
                 const d = (row['ESPECIFICAR'] || '').toLowerCase();
                 const sv = (row['TIPO / SERV'] || '').toLowerCase();
                 const a = (row['AREA'] || '').toLowerCase();
+                
                 const matchesSearch = s.includes(searchTerm) || d.includes(searchTerm) || sv.includes(searchTerm) || a.includes(searchTerm);
                 const matchesSite = siteVal === "" || row['SITIO'] === siteVal;
                 const matchesArea = areaVal === "" || row['AREA'] === areaVal;
                 const matchesService = serviceVal === "" || row['TIPO / SERV'] === serviceVal;
+                
                 return matchesSearch && matchesSite && matchesArea && matchesService;
             });
             renderTable(filtered);
         }
 
+        // Listeners
         document.getElementById('searchInput').addEventListener('keyup', filterData);
         document.getElementById('filterSitio').addEventListener('change', filterData);
         document.getElementById('filterArea').addEventListener('change', filterData);
@@ -449,35 +494,32 @@
              renderTable(allData); 
         });
 
-        fetch('data.json')
+        // --- CARGA DEL ARCHIVO CSV ---
+        fetch('servicios_generales_2025_tqpm.csv')
             .then(response => {
-                if (!response.ok) throw new Error("No se encontró data.json");
+                if (!response.ok) throw new Error("No se encontró el archivo CSV");
                 return response.text();
             }) 
-            .then(textData => {
-                try {
-                    allData = JSON.parse(textData);
-                } catch (e) {
-                    allData = parseRawData(textData);
-                }
+            .then(csvText => {
+                // Parsear CSV a Objetos JS
+                allData = parseCSV(csvText);
                 
-                // CORRECCIÓN: Orden ascendente (1...1533)
+                // Ordenar ascendente por No.
                 allData.sort((a, b) => {
                     const idA = parseInt(a['No.']) || 0;
                     const idB = parseInt(b['No.']) || 0;
                     return idA - idB; 
                 });
 
+                // Actualizar UI
                 populateFilters(allData);
                 document.getElementById('kpi-total').innerText = allData.length.toLocaleString();
                 renderTable(allData);
             })
             .catch(error => {
-                console.warn('Usando datos de respaldo:', error);
-                // En caso de error (CORS o archivo no encontrado), usamos fallbackData
+                console.warn('Error cargando CSV, usando respaldo:', error);
                 allData = fallbackData;
                 renderTable(allData);
-                // El KPI se queda en 1,533 (hardcoded) para mantener estética
             });
 
     </script>
